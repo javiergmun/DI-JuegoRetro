@@ -23,6 +23,14 @@ public class Juego extends BorderPane {
     private Rectangle paredInferior;
     private Rectangle nave1;
     private Rectangle misil;
+    private Rectangle enemigo1;
+    private Rectangle enemigo2;
+    private Rectangle enemigo3;
+    private Rectangle enemigo4;
+    private Rectangle enemigo5;
+    private Rectangle vida1;
+    private Rectangle vida2;
+    private Rectangle vida3;
     //Image fondo = new Image (getClass().getResourceAsStream("src/Images/fondo.png"));
    //ImageView imageView = new ImageView(fondo);
 
@@ -37,8 +45,16 @@ public class Juego extends BorderPane {
         this.nave1= new Rectangle();
         this.misil = new Rectangle();
         this.pista= new StackPane();
+        this.enemigo1= new Rectangle();
+        this.enemigo2= new Rectangle();
+        this.enemigo3= new Rectangle();
+        this.enemigo4= new Rectangle();
+        this.enemigo5= new Rectangle();
+        this.vida1= new Rectangle();
+        this.vida2= new Rectangle();
+        this.vida3= new Rectangle();
         this.controlador = new JuegoController(pista,puntero,cielo, paredIzquierda, paredDerecha,
-                paredSuperior, paredInferior, nave1,misil);
+                paredSuperior, paredInferior, nave1,misil, enemigo1,enemigo2,enemigo3,enemigo4,enemigo5,vida1,vida2,vida3);
 
 
         // inicializar, dar color y tamaño
@@ -70,12 +86,21 @@ public class Juego extends BorderPane {
         nave1.heightProperty().bind(pista.heightProperty().divide(11));
         nave1.widthProperty().bind(pista.heightProperty().divide(15));
 
-        //misil.setFill(new ImagePattern(new Image("misil.png")));
-       // misil.heightProperty().bind(pista.heightProperty().divide(11));
-        //misil.widthProperty().bind(pista.heightProperty().divide(15));
+        vida1.setFill(new ImagePattern(new Image("vida.png")));
+        vida1.heightProperty().bind(nave1.heightProperty().divide(1.3));
+        vida1.widthProperty().bind(nave1.heightProperty().divide(1.3));
+        vida2.setFill(new ImagePattern(new Image("vida.png")));
+        vida2.heightProperty().bind(nave1.heightProperty().divide(1.3));
+        vida2.widthProperty().bind(nave1.heightProperty().divide(1.3));
+        vida3.setFill(new ImagePattern(new Image("vida.png")));
+        vida3.heightProperty().bind(nave1.heightProperty().divide(1.3));
+        vida3.widthProperty().bind(nave1.heightProperty().divide(1.3));
+
+
+
 
         //colocar
-        pista.getChildren().addAll(cielo,puntero,paredIzquierda,paredDerecha,paredInferior,paredSuperior,nave1,misil);
+        pista.getChildren().addAll(cielo,puntero,paredIzquierda,paredDerecha,paredInferior,paredSuperior,nave1,misil,enemigo1,enemigo2,enemigo3,enemigo4,enemigo5, vida1, vida2, vida3);
         pista.setAlignment(paredIzquierda, Pos.CENTER_LEFT);
         pista.setAlignment(paredDerecha, Pos.CENTER_RIGHT);
         pista.setAlignment(paredInferior, Pos.BOTTOM_CENTER);
@@ -84,6 +109,12 @@ public class Juego extends BorderPane {
         pista.setAlignment(cielo, Pos.CENTER);
         pista.setAlignment(puntero, Pos.CENTER);
         pista.setAlignment(misil, Pos.CENTER);
+        vida1.setTranslateX(nave1.getTranslateX()+20);
+        vida1.setTranslateY(nave1.getTranslateY()+32);
+        vida2.setTranslateX(nave1.getTranslateX());
+        vida2.setTranslateY(nave1.getTranslateY()+32);
+        vida3.setTranslateX(nave1.getTranslateX()-20);
+        vida3.setTranslateY(nave1.getTranslateY()+32);
         //pista.getChildren().add(imageView);
         this.setCenter(pista);
         
