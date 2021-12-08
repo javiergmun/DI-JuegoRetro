@@ -1,6 +1,9 @@
 package com.example.spacecraftsoldiers2000;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BackgroundFill;
@@ -31,8 +34,9 @@ public class Juego extends BorderPane {
     private Rectangle vida1;
     private Rectangle vida2;
     private Rectangle vida3;
-    //Image fondo = new Image (getClass().getResourceAsStream("src/Images/fondo.png"));
-   //ImageView imageView = new ImageView(fondo);
+
+    private Label score= new Label();
+    private IntegerProperty puntuacion;
 
     public Juego(){
         //instanciar
@@ -53,6 +57,7 @@ public class Juego extends BorderPane {
         this.vida1= new Rectangle();
         this.vida2= new Rectangle();
         this.vida3= new Rectangle();
+
         this.controlador = new JuegoController(pista,puntero,cielo, paredIzquierda, paredDerecha,
                 paredSuperior, paredInferior, nave1,misil, enemigo1,enemigo2,enemigo3,enemigo4,enemigo5,vida1,vida2,vida3);
 

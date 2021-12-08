@@ -5,10 +5,18 @@ import javafx.animation.Timeline;
 import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
+import java.io.File;
+
+import java.nio.file.Paths;
+
 
 public class JuegoController {
 
@@ -36,6 +44,17 @@ public class JuegoController {
     private Timeline animacion;
     private double desplazamientoX1;
     private double desplazamientoY1;
+
+
+    private Marcador marcador;
+
+    //media sonidos
+    //Media introduccion = new Media(getClass().getResource("/musica/intro.mp3.m4a").toString());
+    //MediaPlayer intro = new MediaPlayer(introduccion);
+    //Media musicaInicio = new Media(getClass().getResource(File.separator+"musica"+File.separator+"intro.mp3").toString());
+    //MediaPlayer musicaJuego = new MediaPlayer(musicaInicio);
+    //AudioClip disparo = new AudioClip(getClass().getResource(File.separator+"musica"+File.separator+"disparo.mp3").toString());
+
 
 
     public JuegoController(StackPane pista, Rectangle puntero, Rectangle cielo, Rectangle paredIzquierda, Rectangle paredDerecha,
@@ -91,9 +110,12 @@ public class JuegoController {
                     paredSuperior.setFill(Color.DARKBLUE);
                     paredInferior.setFill(Color.DARKBLUE);
                     crearEnemigos();
+                    //  SONIDO      intro.play();
+                    marcador= new Marcador(pista);
                     break;
                 case A:
                     desplazamientoX1 = -1 * velocidad;
+                    //musicaJuego.play();
 
                     break;
                 case W:
@@ -109,6 +131,7 @@ public class JuegoController {
                     break;
                 case E:
                     disparar();
+                   // disparo.play();
             }
         });
         pista.setOnKeyReleased(g -> {
@@ -157,8 +180,11 @@ public class JuegoController {
         misil.widthProperty().bind(pista.heightProperty().divide(15));
     }
 
+
     private void crearEnemigos() {
         enemigo1.setFill(new ImagePattern(new Image("enemigo1.png")));
+
+
         enemigo1.setTranslateX((int) Math.floor(Math.random() * 220 - 220));
         enemigo1.setTranslateY(-250);
         enemigo1.heightProperty().bind(pista.heightProperty().divide(15));
@@ -205,8 +231,8 @@ public class JuegoController {
         enemigo5.setTranslateX(enemigo5.getTranslateX() - 2);
     }
 
-
     private void detectarColision1() {
+
         //PUNTERO, NAVE  CON PAREDES
         if (nave1.getBoundsInParent().intersects(paredDerecha.getBoundsInParent()))
             nave1.setTranslateX(-207);
@@ -227,26 +253,31 @@ public class JuegoController {
             enemigo1.setTranslateX((int) Math.floor(Math.random() * 210 - 210));
             enemigo1.setTranslateY(-250);
             misil.setTranslateY(-500);
+            marcador.sumar();
         }
         if (misil.getBoundsInParent().intersects(enemigo2.getBoundsInParent())) {
             enemigo2.setTranslateX((int) Math.floor(Math.random() * 210 - 210));
             enemigo2.setTranslateY(-250);
             misil.setTranslateY(-500);
+            marcador.sumar();
         }
         if (misil.getBoundsInParent().intersects(enemigo3.getBoundsInParent())) {
             enemigo3.setTranslateX((int) Math.floor(Math.random() * -210 + 210));
             enemigo3.setTranslateY(-250);
             misil.setTranslateY(-500);
+            marcador.sumar();
         }
         if (misil.getBoundsInParent().intersects(enemigo4.getBoundsInParent())) {
             enemigo4.setTranslateX((int) Math.floor(Math.random() * -210 + 210));
             enemigo4.setTranslateY(-250);
             misil.setTranslateY(-500);
+            marcador.sumar();
         }
         if (misil.getBoundsInParent().intersects(enemigo5.getBoundsInParent())) {
             enemigo5.setTranslateX((int) Math.floor(Math.random() * -210 + 210));
             enemigo5.setTranslateY(-250);
             misil.setTranslateY(-500);
+            marcador.sumar();
         }
         //ENEMIGOS CON PAREDES or  CON NAVE
         if (enemigo1.getBoundsInParent().intersects(paredInferior.getBoundsInParent()) ||
@@ -254,6 +285,7 @@ public class JuegoController {
             enemigo1.setTranslateX((int) Math.floor(Math.random() * 210 - 210));
             enemigo1.setTranslateY(-250);
             vida1.setVisible(false);
+            marcador.restar();
             //restar puntos y vida
         }
         if (enemigo2.getBoundsInParent().intersects(paredInferior.getBoundsInParent()) ||
@@ -261,23 +293,28 @@ public class JuegoController {
             enemigo2.setTranslateX((int) Math.floor(Math.random() * 210 - 210));
             enemigo2.setTranslateY(-250);
             vida1.setVisible(false);
+            marcador.restar();
         }
         if (enemigo3.getBoundsInParent().intersects(paredInferior.getBoundsInParent()) ||
                 (enemigo3.getBoundsInParent().intersects(nave1.getBoundsInParent()))) {
             enemigo3.setTranslateX((int) Math.floor(Math.random() * 210 - 210));
             enemigo3.setTranslateY(-250);
             vida1.setVisible(false);
+            marcador.restar();
         }
         if (enemigo4.getBoundsInParent().intersects(paredInferior.getBoundsInParent()) ||
                 (enemigo4.getBoundsInParent().intersects(nave1.getBoundsInParent()))) {
             enemigo4.setTranslateX((int) Math.floor(Math.random() * 210 - 210));
             enemigo4.setTranslateY(-250);
+            vida1.setVisible(false);
+            marcador.restar();
         }
         if (enemigo5.getBoundsInParent().intersects(paredInferior.getBoundsInParent()) ||
                 (enemigo5.getBoundsInParent().intersects(nave1.getBoundsInParent()))) {
             enemigo5.setTranslateX((int) Math.floor(Math.random() * 210 - 210));
             enemigo5.setTranslateY(-250);
             vida1.setVisible(false);
+            marcador.restar();
         }
         // ENEMIGOS CON PAREDES LATERALES
         if (enemigo2.getBoundsInParent().intersects(paredDerecha.getBoundsInParent())) {
@@ -291,8 +328,3 @@ public class JuegoController {
         }
         }
     }
-
-
-
-
-
